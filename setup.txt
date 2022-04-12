@@ -7,3 +7,5 @@ yarn add @chakra-ui/react @emotion/react @emotion/styled framer-motion
 # Configure necessary providers in index.js
 # Configure routes in App.js
 # Connect to the injected provider the first time we load the app.
+
+yarn add @web3-react/injected-connector

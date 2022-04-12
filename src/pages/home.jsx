@@ -18,7 +18,6 @@ const Home = () => {
 
   return (
     <>
-      <p>{ethereumButtonEnabled ? "hola" : "chao"}</p>
       <button disabled={!ethereumButtonEnabled} onClick={enableEthereum}>
         Hello World
       </button>
