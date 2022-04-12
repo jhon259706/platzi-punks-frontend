@@ -1,11 +1,14 @@
 import Home from "./pages/home";
 import { Route, Routes } from "react-router-dom";
+import MainLayout from "./components/layouts/main";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" exact element={<Home />} />
-    </Routes>
+    <MainLayout>
+      <Routes>
+        <Route path="/" exact element={<Home />} />
+      </Routes>
+    </MainLayout>
   );
 }
 
