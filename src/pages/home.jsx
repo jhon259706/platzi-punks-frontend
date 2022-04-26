@@ -1,26 +1,29 @@
-import { useState } from "react";
-import Web3 from "web3";
+import { useWeb3React } from "@web3-react/core";
+import { useState, useCallback, useEffect } from "react";
+import usePlatziPunks from "../hooks/usePlatziPunks";
 
 const Home = () => {
-  const [ethereumButtonEnabled, setEthereumButtonEnabled] = useState(true);
+  const { active } = useWeb3React();
+  const [maxSupply, setMaxSupply] = useState();
+  const platziPunks = usePlatziPunks();
 
-  const enableEthereum = () => {
-    if (window.ethereum) {
-      setEthereumButtonEnabled(false);
-      const web3 = new Web3(window.ethereum);
-
-      web3.eth
-        .requestAccounts()
-        .then(console.log)
-        .catch((error) => setEthereumButtonEnabled(true));
+  const getMaxSupply = useCallback(async () => {
+    if (platziPunks) {
+      const result = await platziPunks.methods.maxSupply().call();
+      console.log(result);
+      setMaxSupply(result);
     }
-  };
+  }, [platziPunks]);
+
+  useEffect(() => {
+    getMaxSupply();
+  }, [getMaxSupply])
 
   return (
     <>
-      <button disabled={!ethereumButtonEnabled} onClick={enableEthereum}>
-        Hello World
-      </button>
+      <p>
+        { active ? `Max Supply: ${maxSupply}` : "Connect to your wallet" }
+      </p>
     </>
   );
 };
