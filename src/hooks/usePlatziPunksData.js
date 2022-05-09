@@ -102,8 +102,31 @@ const usePlatziPunksData = () => {
   };
 };
 
-// const usePlatziPunkData = () => {
+const usePlatziPunkData = (tokenId) => {
+  const [punk, setPunk] = useState();
+  const [loading, setLoading] = useState(true);
+  const platziPunks = usePlatziPunks();
 
-// }
+  const update = useCallback(async () => {
+    if (platziPunks && tokenId) {
+      setLoading(true);
 
-export { usePlatziPunksData };
+      const toSet = await getPunkData({ tokenId, platziPunks });
+      setPunk(toSet);
+
+      setLoading(false);
+    }
+  }, [platziPunks, tokenId]);
+
+  useEffect(() => {
+    update();
+  }, [update]);
+
+  return {
+    loading,
+    punk,
+    update,
+  };
+};
+
+export { usePlatziPunksData, usePlatziPunkData };
